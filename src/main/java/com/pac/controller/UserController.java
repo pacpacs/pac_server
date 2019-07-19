@@ -1,8 +1,11 @@
 package com.pac.controller;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +34,11 @@ public class UserController {
 	}*/
 	
 	@GetMapping("/")
-	public List<UserDAO> getAllUsers(){
+	public ResponseEntity<List<Map<String,String>>> getAllUsers(){
 		
-		List<UserDAO> userList = userService.getAllUser();
-		return userList;
-		
+		List<Map<String,String>> userList = userService.getAllUsers();
+		return new ResponseEntity<List<Map<String,String>>>(userList, HttpStatus.OK);
+			
 	}
+	
 }
