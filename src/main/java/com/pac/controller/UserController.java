@@ -1,6 +1,5 @@
 package com.pac.controller;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pac.model.dao.UserDAO;
 import com.pac.service.UserService;
 
 @RestController
@@ -33,7 +31,7 @@ public class UserController {
 		return new ResponseEntity<HashMap<String, String>>(entity, HttpStatus.OK);
 	}*/
 	
-	@GetMapping("/")
+	@GetMapping("")
 	public ResponseEntity<List<Map<String,String>>> getAllUsers(){
 		
 		List<Map<String,String>> userList = userService.getAllUsers();
