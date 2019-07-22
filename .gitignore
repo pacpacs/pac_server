@@ -5,6 +5,13 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+##configuration
+application.properties
+
+### Java ###
+# Compiled class file
+*.class
+
 ### STS ###
 .apt_generated
 .classpath
