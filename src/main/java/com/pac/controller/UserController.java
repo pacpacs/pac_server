@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pac.domain.User;
 import com.pac.service.UserService;
 
 @RestController
@@ -32,11 +33,12 @@ public class UserController {
 	}*/
 	
 	@GetMapping("")
-	public ResponseEntity<List<Map<String,String>>> getAllUsers(){
+	public ResponseEntity<List<User>> getAllUsers(){
 		
-		List<Map<String,String>> userList = userService.getAllUsers();
-		return new ResponseEntity<List<Map<String,String>>>(userList, HttpStatus.OK);
+		List<User> userList = userService.getAllUsers();
+		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
 			
 	}
+
 	
 }
