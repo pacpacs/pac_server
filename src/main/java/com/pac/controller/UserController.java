@@ -3,6 +3,7 @@ package com.pac.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.pac.domain.UserList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,10 @@ public class UserController {
 	}*/
 	
 	@GetMapping("")
-	public ResponseEntity<List<User>> getAllUsers(){
+	public ResponseEntity<UserList> getAllUsers(){
 		
-		List<User> userList = userService.getAllUsers();
-		return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
+		UserList userList = userService.getAllUsers();
+		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
 			
 	}
 

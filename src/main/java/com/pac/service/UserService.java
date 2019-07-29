@@ -16,12 +16,13 @@ public class UserService {
 	
 	private UserList userListVO;
 	
-	public List<User> getAllUsers(){
+	public UserList getAllUsers(){
 		List<User> userList = userRepository.findAll();
-		
-		userListVO.setUserList(userList);
-		
-		return userListVO.getUserList();
+
+		userListVO = new UserList(userList);
+
+
+		return userListVO;
 		
 	}
 	

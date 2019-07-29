@@ -6,7 +6,6 @@ public class UserList {
 	private List<User> userList;
 
 	public UserList() {
-
 	}
 
 	public UserList(User user) {
@@ -22,9 +21,7 @@ public class UserList {
 	}
 
 	public void setUserList(List<User> userList) {
-		for (User user : userList) {
-			this.userList.add(user);
-		}
+		this.userList=userList;
 	}
 
 	private void addUser(User user) {

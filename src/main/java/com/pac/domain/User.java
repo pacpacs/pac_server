@@ -1,5 +1,6 @@
 package com.pac.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,11 +9,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 	
 	@Id
+	@JsonProperty("_id")
 	private ObjectId _id;
 
+	@JsonProperty("user_id")
 	private String user_id;
+
+	@JsonProperty("nick_name")
 	private String nick_name;
+
+	@JsonProperty("password")
 	private String password;
+
+	@JsonProperty("img_path")
 	private String img_path;
 	
 	public User(ObjectId _id, String user_id, String nick_name, String password, String img_path) {
