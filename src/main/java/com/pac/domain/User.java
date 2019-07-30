@@ -3,6 +3,7 @@ package com.pac.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="users")
@@ -13,6 +14,7 @@ public class User {
 	private ObjectId _id;
 
 	@JsonProperty("user_id")
+	@Indexed(unique = true)
 	private String user_id;
 
 	@JsonProperty("nick_name")
@@ -32,6 +34,9 @@ public class User {
 		this.img_path = img_path;
 	}
 
+	public String get_id() {
+		return _id.toHexString();
+	}	
 	
 	public String getUser_id() {
 		return user_id;

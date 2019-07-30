@@ -4,42 +4,64 @@ import java.util.List;
 import java.util.Map;
 
 import com.pac.domain.UserList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pac.domain.User;
 import com.pac.service.UserService;
 
+/**
+ * @author Seo YunKyung
+ *
+ * 
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
 	
+	Logger log = LoggerFactory.getLogger("com.pac.controller.UserController");
+	
+	
 	@Autowired
 	UserService userService;
-	/*
-	 * sample code to connect with flutter application
-	 * 
-	@GetMapping(path = "/hello", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<HashMap<String, String>> sayHello() {
-		// Get data from service layer into entityList.
-
-		HashMap<String, String> entity = new HashMap();
-		entity.put("key", "Pick AND Cook");
-
-		return new ResponseEntity<HashMap<String, String>>(entity, HttpStatus.OK);
-	}*/
-	
-	@GetMapping("")
-	public ResponseEntity<UserList> getAllUsers(){
 		
-		UserList userList = userService.getAllUsers();
-		return new ResponseEntity<UserList>(userList, HttpStatus.OK);
+	@GetMapping("/")
+	public ResponseEntity<List<User>> getAllUsers(){
+	
+		return new ResponseEntity<List<User>>(userService.getAllUsers(), HttpStatus.OK);
 			
 	}
-
+	
+	@GetMapping("/login/{user_id}/{password}")
+	public ResponseEntity<String> login(@PathVariable("user_id") String user_id, @PathVariable("password") String password) {
+		
+		if(!userService.login(user_id,password)) {
+			return ResponseEntity.status(HttpStatus.OK).body("login Not success");
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body("login success");
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<String> register(@RequestBody User user) {
+		if(!userService.register(user)) {
+			return ResponseEntity.status(HttpStatus.OK).body("Sorry can't register");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body("Welcome You are now Pick And Cook Member");
+	}
+	
+	
+	
+	
 	
 }
