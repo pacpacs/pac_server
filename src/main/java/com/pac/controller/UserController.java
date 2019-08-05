@@ -42,10 +42,10 @@ public class UserController {
 			
 	}
 	
-	@GetMapping("/login/{user_id}/{password}")
-	public ResponseEntity<String> login(@PathVariable("user_id") String user_id, @PathVariable("password") String password) {
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestBody Map<String, String> json) {
 		
-		if(!userService.login(user_id,password)) {
+		if(!userService.login(json.get("user_id"),json.get("password"))) {
 			return ResponseEntity.status(HttpStatus.OK).body("login Not success");
 		}
 		

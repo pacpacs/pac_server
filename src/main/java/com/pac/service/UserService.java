@@ -34,7 +34,7 @@ public class UserService {
 	}
 
 	
-	//TODO authentication Ãß°¡
+	//TODO authentication ï¿½ß°ï¿½
 	public boolean login(String user_id, String password) {
 		User user = getUserById(user_id);
 		if(user.getPassword().equals(password))
