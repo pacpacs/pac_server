@@ -28,18 +28,19 @@ public class UserService {
 		
 	}
 	
-	public User getUserById(String user_id) {
-		return userRepository.findOneByUser_id(user_id);
+	public User getUserById(String userId) {
+		return userRepository.findByUserId(userId);
 		
 	}
 
 	
 	//TODO authentication �߰�
-	public boolean login(String user_id, String password) {
-		User user = getUserById(user_id);
+	public User login(String userId, String password) {
+		User user = getUserById(userId);
+		log.info(user.getUserId());
 		if(user.getPassword().equals(password))
-			return true;
-		else return false;
+			return user;
+		else return null;
 	}
 	
 	public boolean register(User user) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pac.domain.User;
@@ -43,14 +44,16 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody Map<String, String> json) {
-		
-		if(!userService.login(json.get("user_id"),json.get("password"))) {
-			return ResponseEntity.status(HttpStatus.OK).body("login Not success");
+	public ResponseEntity<User> login( @RequestParam  Map<String, String> json) {
+		log.info(json.toString());
+		User user = userService.login(json.get("userId"),json.get("password"));
+				
+		if(user==null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body("login success");
-	}
+		else{
+			return ResponseEntity.status(HttpStatus.OK).body(user);}
+		}
 	
 	@PostMapping("/register")
 	public ResponseEntity<String> register(@RequestBody User user) {

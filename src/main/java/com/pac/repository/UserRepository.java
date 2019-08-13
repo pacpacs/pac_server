@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends MongoRepository<User, String>  {
 
-	User findOneByUser_id(String user_id);
+	User findByUserId(String userId);
 
 
 }

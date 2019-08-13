@@ -13,45 +13,45 @@ public class User {
 	@JsonProperty("_id")
 	private ObjectId _id;
 
-	@JsonProperty("user_id")
+	@JsonProperty("userId")
 	@Indexed(unique = true)
-	private String user_id;
+	private String userId;
 
-	@JsonProperty("nick_name")
-	private String nick_name;
+	@JsonProperty("nickName")
+	private String nickName;
 
 	@JsonProperty("password")
 	private String password;
 
-	@JsonProperty("img_path")
-	private String img_path;
+	@JsonProperty("imgPath")
+	private String imgPath;
 	
-	public User(ObjectId _id, String user_id, String nick_name, String password, String img_path) {
+	public User(ObjectId _id, String userId, String nickName, String password, String imgPath) {
 		this._id = _id;
-		this.user_id=user_id;
-		this.nick_name =  nick_name;
+		this.userId=userId;
+		this.nickName =  nickName;
 		this.password = password;
-		this.img_path = img_path;
+		this.imgPath = imgPath;
 	}
 
 	public String get_id() {
 		return _id.toHexString();
 	}	
 	
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId (String userId) {
+		this.userId = userId;
 	}
 
-	public String getNick_name() {
-		return nick_name;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setNick_name(String nick_name) {
-		this.nick_name = nick_name;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getPassword() {
@@ -62,12 +62,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getImg_path() {
-		return img_path;
+	public String getImgPath() {
+		return imgPath;
 	}
 
-	public void setImg_path(String img_path) {
-		this.img_path = img_path;
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 	
 }
