@@ -56,11 +56,14 @@ public class UserController {
 		}
 	
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody User user) {
-		if(!userService.register(user)) {
-			return ResponseEntity.status(HttpStatus.OK).body("Sorry can't register");
+	public ResponseEntity<User> register(@RequestBody User user) {
+		if(userService.register(user)==null) {
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+		}else {
+			User registeredUser = userService.getUserById(user.getUserId());
+			return ResponseEntity.status(HttpStatus.OK).body(registeredUser);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body("Welcome You are now Pick And Cook Member");
+		
 	}
 	
 	

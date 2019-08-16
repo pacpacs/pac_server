@@ -43,8 +43,10 @@ public class UserService {
 		else return null;
 	}
 	
-	public boolean register(User user) {
-		return true;
+	public User register(User user) {
+		user = userRepository.save(user);
+		log.info(user.toString());
+		return user;
 	}
 
 	
