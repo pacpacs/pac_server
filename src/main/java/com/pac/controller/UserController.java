@@ -1,7 +1,12 @@
 package com.pac.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import com.pac.domain.UserList;
 
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pac.domain.User;
 import com.pac.service.UserService;
@@ -55,14 +61,14 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.OK).body(user);}
 		}
 	
+	//image 파일과 같이 들어와 ResponseBody를 이용해 바로 User mapping보단 multipartHttpServletRequest를 선택
 	@PostMapping("/register")
-	public ResponseEntity<User> register(@RequestBody User user) {
-		if(userService.register(user)==null) {
-			return ResponseEntity.status(HttpStatus.OK).body(null);
-		}else {
-			User registeredUser = userService.getUserById(user.getUserId());
-			return ResponseEntity.status(HttpStatus.OK).body(registeredUser);
-		}
+	public ResponseEntity register(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+		
+		multipartRequest.setCharacterEncoding("utf-8");
+		userService.register(multipartRequest);	
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 	

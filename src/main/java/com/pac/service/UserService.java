@@ -1,11 +1,15 @@
 package com.pac.service;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.pac.domain.UserList;
 import com.pac.domain.User;
@@ -20,6 +24,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ImageService imageService;
 		
 	public List<User> getAllUsers(){
 		List<User> userList = userRepository.findAll();
@@ -43,10 +50,25 @@ public class UserService {
 		else return null;
 	}
 	
-	public User register(User user) {
-		user = userRepository.save(user);
-		log.info(user.toString());
-		return user;
+	public void register(MultipartHttpServletRequest multipartRequest) throws Exception {
+		
+
+		Map<String,Object> registerMap = new HashMap<String,Object>();
+		
+		Enumeration enu = multipartRequest.getParameterNames();
+		//이때 name은 database내의 attribute 여야한다.
+		while(enu.hasMoreElements()) {
+			String name = (String)enu.nextElement();
+			String value = multipartRequest.getParameter(name);
+			registerMap.put(name, value);
+		}
+		
+		String imageFileName = imageService.upload(multipartRequest).get(0);
+		
+		registerMap.put("imgPath",imageFileName);
+		
+		
+		
 	}
 
 	
