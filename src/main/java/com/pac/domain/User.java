@@ -26,6 +26,10 @@ public class User {
 	@JsonProperty("imgPath")
 	private String imgPath;
 	
+	public User() {
+		
+	}
+	
 	public User(ObjectId _id, String userId, String nickName, String password, String imgPath) {
 		this._id = _id;
 		this.userId=userId;

@@ -1,51 +1,82 @@
 package com.pac.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.pac.domain.CustomImage;
 
 
 @Service("ImageService")
 public class ImageService {
 
-	final static String ARTICLE_IMAGE_REPO ="/home/ec2-user/pac/git/images";
+	 @Autowired
+	 ServletContext servletContext;
+	 
+	final static String REGISTER = "REGISTER";
+	final static String RECIPE_BOARD = "BOARD";
+	
+	//ÏÑúÎ≤ÑÏö©
+//	final static String ARTICLE_IMAGE_REPO ="/home/ec2-user/pac/git/images";
+	
+	//Î°úÏπºÏÑúÎ≤ÑÏö©
+	final static String ARTICLE_IMAGE_REPO ="C:\\Users\\carys\\Desktop\\pac\\pac_server\\images";
+	final static String REGISTER_REPO = "register\\";
+	final static String RECIPE_BOARD_REPO = "board\\";
+	
 	Logger log = LoggerFactory.getLogger("com.pac.service.ImageService");
 	
-	//ø©∑Ø file upload
-	protected List<String> upload(MultipartHttpServletRequest multipartRequest) throws Exception
+	//one file upload
+	public CustomImage upload(String base64Image, String fileName, String tag) throws Exception
 	{
-		//fileListπﬁæ∆ø»
-		List<String> fileList = new ArrayList<String>();
-		Iterator<String> fileNames = multipartRequest.getFileNames();
+
+		CustomImage customImage = new CustomImage();
+		customImage.setBase64Image(base64Image);
+		customImage.setTag(tag);
 		
-		while(fileNames.hasNext()) {
-			//«— ∞≥¿« file∏∂¥Ÿ upload¡¯«‡
-			String fileName = fileNames.next();
-			MultipartFile mFile = multipartRequest.getFile(fileName);
-			
-			//originalFileName ±∏«œ∞Ì fileListø° ¿˙¿Â
-			String originalFileName = mFile.getOriginalFilename();
-			fileList.add(originalFileName);
-			
-			File file = new File(ARTICLE_IMAGE_REPO+"/"+fileName);
-			if(mFile.getSize()!=0) {
-				if(! file.exists()) {
-					if(file.getParentFile().mkdirs()) {
-						file.createNewFile();
-					}
-				}
-				mFile.transferTo(new File(ARTICLE_IMAGE_REPO+"/temp/"+originalFileName));
+		try
+        {
+            //This will decode the String which is encoded by using Base64 class
+            byte[] imageByte=Base64.decodeBase64(base64Image);
+            
+
+            String directory = "";
+          
+			//ÌöåÏõêÍ∞ÄÏûÖÏö© 
+			if(tag.compareTo(REGISTER)==0) {
+				//TODO  fileÏù¥Î¶Ñ Ï§ëÎ≥µÏ≤òÎ¶¨
+				directory = servletContext.getContextPath()+"images\\"+REGISTER_REPO+fileName;
+			}
+			//Î†àÏãúÌîº Î≥¥ÎìúÏö©
+			else if(tag.compareTo(RECIPE_BOARD)==0){
+				directory = servletContext.getContextPath()+"images\\"+fileName;
 			}
 			
-			
-		}
-		return fileList;
+            new FileOutputStream(directory).write(imageByte);
+            
+            customImage.setFileName(directory);
+  
+            return customImage;
+        }
+        catch(Exception e)
+        {
+        	log.error(e.getMessage());
+            return null;
+        }
 	}
+
 }
