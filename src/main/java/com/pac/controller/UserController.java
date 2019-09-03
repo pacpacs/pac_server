@@ -66,7 +66,8 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity register(User user) throws Exception {
 		
-		log.debug("register start");
+		log.info("register start");
+		log.info(user.getNickName());
 		User RegisteredUser = userService.register(user);	
 		
 		return ResponseEntity.status(HttpStatus.OK).body(RegisteredUser);

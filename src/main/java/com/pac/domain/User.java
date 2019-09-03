@@ -30,6 +30,14 @@ public class User {
 		
 	}
 	
+	public User(String userId, String nickName, String password, String imgPath) {
+		this.userId=userId;
+		this.nickName =  nickName;
+		this.password = password;
+		this.imgPath = imgPath;
+	}
+
+	
 	public User(ObjectId _id, String userId, String nickName, String password, String imgPath) {
 		this._id = _id;
 		this.userId=userId;

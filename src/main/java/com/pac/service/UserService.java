@@ -53,9 +53,10 @@ public class UserService {
 	}
 	
 	public User register(User user) throws Exception {
+		log.info(user.getUserId());
 		
-		User registeredUser = userRepository.save(user);
-		
+		User tmpUser = new User(user.getUserId(),user.getNickName(),user.getPassword(),user.getImgPath());
+		User registeredUser = userRepository.insert(tmpUser); 		
 		return registeredUser;
 	}
 
