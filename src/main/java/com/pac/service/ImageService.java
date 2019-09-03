@@ -34,7 +34,7 @@ public class ImageService {
 //	final static String ARTICLE_IMAGE_REPO ="/home/ec2-user/pac/git/images";
 	
 	//로칼서버용
-	final static String ARTICLE_IMAGE_REPO ="C:\\Users\\carys\\Desktop\\pac\\pac_server\\images";
+	final static String ARTICLE_IMAGE_REPO ="C:\\Users\\carys\\Desktop\\pac\\pac_server\\";
 	final static String REGISTER_REPO = "register\\";
 	final static String RECIPE_BOARD_REPO = "board\\";
 	
@@ -43,7 +43,7 @@ public class ImageService {
 	//one file upload
 	public CustomImage upload(String base64Image, String fileName, String tag) throws Exception
 	{
-
+		log.info("image upload");
 		CustomImage customImage = new CustomImage();
 		customImage.setBase64Image(base64Image);
 		customImage.setTag(tag);
@@ -59,11 +59,11 @@ public class ImageService {
 			//회원가입용 
 			if(tag.compareTo(REGISTER)==0) {
 				//TODO  file이름 중복처리
-				directory = servletContext.getContextPath()+"images\\"+REGISTER_REPO+fileName;
+				directory = ARTICLE_IMAGE_REPO+"images\\"+REGISTER_REPO+fileName;
 			}
 			//레시피 보드용
 			else if(tag.compareTo(RECIPE_BOARD)==0){
-				directory = servletContext.getContextPath()+"images\\"+fileName;
+				directory = ARTICLE_IMAGE_REPO+"images\\"+fileName;
 			}
 			
             new FileOutputStream(directory).write(imageByte);
