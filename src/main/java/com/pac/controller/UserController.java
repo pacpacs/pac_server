@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -63,12 +64,13 @@ public class UserController {
 	
 	//image 파일과 같이 들어와 ResponseBody를 이용해 바로 User mapping보단 multipartHttpServletRequest를 선택
 	@PostMapping("/register")
-	public ResponseEntity register(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+	public ResponseEntity register(User user) throws Exception {
 		
-		multipartRequest.setCharacterEncoding("utf-8");
-		userService.register(multipartRequest);	
+		log.info("register start");
+		log.info(user.getNickName());
+		User RegisteredUser = userService.register(user);	
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		return ResponseEntity.status(HttpStatus.OK).body(RegisteredUser);
 		
 	}
 	

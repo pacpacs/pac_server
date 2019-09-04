@@ -4,7 +4,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,25 +52,12 @@ public class UserService {
 		else return null;
 	}
 	
-	public void register(MultipartHttpServletRequest multipartRequest) throws Exception {
+	public User register(User user) throws Exception {
+		log.info(user.getUserId());
 		
-
-		Map<String,Object> registerMap = new HashMap<String,Object>();
-		
-		Enumeration enu = multipartRequest.getParameterNames();
-		//이때 name은 database내의 attribute 여야한다.
-		while(enu.hasMoreElements()) {
-			String name = (String)enu.nextElement();
-			String value = multipartRequest.getParameter(name);
-			registerMap.put(name, value);
-		}
-		
-		String imageFileName = imageService.upload(multipartRequest).get(0);
-		
-		registerMap.put("imgPath",imageFileName);
-		
-		
-		
+		User tmpUser = new User(user.getUserId(),user.getNickName(),user.getPassword(),user.getImgPath());
+		User registeredUser = userRepository.insert(tmpUser); 		
+		return registeredUser;
 	}
 
 	
