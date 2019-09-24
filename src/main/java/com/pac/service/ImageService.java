@@ -59,7 +59,7 @@ public class ImageService {
 			//회원가입용 
 			if(tag.compareTo(REGISTER)==0) {
 				//TODO  file이름 중복처리
-				directory = ARTICLE_IMAGE_REPO+"images\\"+REGISTER_REPO+fileName;
+				directory = servletContext.getContextPath()+"images\\"+REGISTER_REPO+fileName;
 			}
 			//레시피 보드용
 			else if(tag.compareTo(RECIPE_BOARD)==0){
