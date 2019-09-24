@@ -29,7 +29,7 @@ public class ImageController {
 	
 	@Autowired
 	ImageService imageService;
-		
+
 	@PostMapping("/upload")
 	public ResponseEntity<CustomImage> uploadImage(CustomImage image) throws Exception{
 		
