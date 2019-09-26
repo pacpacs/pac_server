@@ -34,8 +34,8 @@ public class RecipeController {
     }
 
 	@PostMapping("/getResult")
-    public ResponseEntity<List<RecipeBasic>> getResutlByKeyword(@RequestParam("key") List<String>keys){
-        return new ResponseEntity<List<RecipeBasic>>(recipeService.getRecipesByKeyword(keys),HttpStatus.OK);
+    public ResponseEntity<List<RecipeBasic>> getResutlByKeyword(@RequestParam("ingredients") List<String>ingredients){
+        return new ResponseEntity<List<RecipeBasic>>(recipeService.getRecipesByIngredients(ingredients),HttpStatus.OK);
     }
 
 

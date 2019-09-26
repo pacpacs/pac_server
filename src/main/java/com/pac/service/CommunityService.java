@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pac.domain.recipe.RecipeBasic;
-import com.pac.repository.RecipeRepository;
+import com.pac.repository.recipe.RecipeBasicRepository;
 
 @Service("CommunityService")
 public class CommunityService {
     Logger log = LoggerFactory.getLogger("com.pac.service.CommunityService");
 
     @Autowired
-    private RecipeRepository recipeRepository;
+    private RecipeBasicRepository recipeRepository;
 
     public List<RecipeBasic> getAllRecipes(){
         List<RecipeBasic> recipeBasicList = recipeRepository.findAll();
