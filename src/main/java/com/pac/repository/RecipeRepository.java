@@ -1,14 +1,14 @@
 package com.pac.repository;
 
-import com.pac.domain.User;
-import com.pac.domain.recipe.RecipeBasic;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.stream.Stream;
+import com.pac.domain.recipe.RecipeBasic;
 
 @Repository
 public interface RecipeRepository extends MongoRepository<RecipeBasic, String> {
-    List<RecipeBasic> findByRecipesINGNMContaining(List<String> keys);
+    RecipeBasic findByRecipeId(Integer recipeId);
+    List<RecipeBasic> findByIrdntCodeContaining(List<String> keys);
+
 }
