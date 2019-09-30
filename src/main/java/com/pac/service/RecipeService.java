@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -18,27 +20,64 @@ public class RecipeService {
     Logger log = LoggerFactory.getLogger("com.pac.service.RecipeService");
 
     @Autowired
-    RecipeBasicRepository recipeRepository;
+    RecipeBasicRepository recipeBasicRepository;
     @Autowired
     RecipeIngredientsRepository recipeIngredientsRepository;
 
     public List<RecipeBasic> getAllRecipes(){
-        List<RecipeBasic> recipeBasicList = recipeRepository.findAll();
+        List<RecipeBasic> recipeBasicList = recipeBasicRepository.findAll();
         return recipeBasicList;
     }
 
-    public List<RecipeIngredient> getRecipesByIngredients(List<String>ingredients){
-        //ingredient 통해서 reciep전부 구하기
-        List<RecipeIngredient> recipeIngredientList = recipeIngredientsRepository.findByIrdntNmContaining(ingredients);
-        log.debug( recipeIngredientList.toString());
+    public List<RecipeBasic> getRecipesByIngredients(List<String>ingredients){
 
-        //recipe ID 구하기
-        List<Integer> recipeIdList = getRecipeId(recipeIngredientList);
-        log.debug(recipeIdList.toString());
+        List<RecipeIngredient> recipeIngredientList = recipeIngredientsRepository.findByIrdntNmInOrderByRecipeId(ingredients);
+        List<Integer> recipeIdListFromDB = getRecipeId(recipeIngredientList);
+        List<RecipeBasic> recipeBasicList = recipeBasicRepository.findByRecipeIdInOrderByRecipeId(recipeIdListFromDB);
+        List<Integer> recipeIdList = makeRecipeIdList(recipeBasicList);
+        List<RecipeIngredient> recipeIngredientsByRecipeId = recipeIngredientsRepository.findByRecipeIdInOrderByRecipeId(recipeIdList);
+        recipeBasicList = getRecipesPercentage(recipeIngredientsByRecipeId,recipeBasicList,ingredients);
+        Collections.sort(recipeBasicList);
 
-        //recipe ID 통해 recipe info 구하기
-        List<RecipeBasic> recipeBasicList = recipeRepository.findAllByRecipeId(recipeIdList);
-        return recipeIngredientList;
+        return recipeBasicList;
+    }
+
+    private List<Integer> makeRecipeIdList(List<RecipeBasic> recipeBasicList) {
+        List<Integer> recipeIdList = new ArrayList<>();
+        for(int i=0;i<recipeBasicList.size();i++){
+            recipeIdList.add(recipeBasicList.get(i).getRecipeId());
+        }
+        return recipeIdList;
+    }
+
+    private List<RecipeBasic> getRecipesPercentage(List<RecipeIngredient> recipeIngredientList, List<RecipeBasic> recipeBasicList, List<String> ingredients) {
+        int index = 0;
+        for(RecipeBasic recipeBasic : recipeBasicList){
+            double count = 0;
+            double matched = 0;
+            int recipeId = recipeBasic.getRecipeId();
+            while(true){
+                if(index==recipeIngredientList.size())break;
+                RecipeIngredient recipeIngredient = recipeIngredientList.get(index);
+
+                if(recipeIngredient.getRecipeId()==recipeId){
+                    for(String ingredient : ingredients){
+                        if(ingredient.equals(recipeIngredient.getIrdntNm()))matched++;
+                    }
+                    index++;
+                    count++;
+                }else break;
+
+            }
+            double percentage = Math.round(matched/count*10000)/100.0;
+            if(percentage !=0){
+                recipeBasic.setPercenatge(percentage);
+            }else{
+                recipeBasic.setPercenatge(0);
+            }
+
+        }
+        return recipeBasicList;
     }
 
     private List<Integer> getRecipeId(List<RecipeIngredient> recipeIngredientList) {

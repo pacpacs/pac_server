@@ -61,8 +61,7 @@ public class UserController {
 		else{
 			return ResponseEntity.status(HttpStatus.OK).body(user);}
 		}
-	
-	//image 파일과 같이 들어와 ResponseBody를 이용해 바로 User mapping보단 multipartHttpServletRequest를 선택
+
 	@PostMapping("/register")
 	public ResponseEntity register(User user) throws Exception {
 		

@@ -10,5 +10,7 @@ import java.util.List;
 
 @Repository
 public interface RecipeIngredientsRepository extends MongoRepository<RecipeIngredient, String>  {
-    List<RecipeIngredient> findByIrdntNmContaining(List<String> ingredients);
+    List<RecipeIngredient> findByIrdntNmInOrderByRecipeId(List<String> ingredients);
+
+    List<RecipeIngredient> findByRecipeIdInOrderByRecipeId(List<Integer> recipeIdList);
 }

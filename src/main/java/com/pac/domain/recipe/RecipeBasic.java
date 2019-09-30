@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="recipe_basic")
-public class RecipeBasic {
+public class RecipeBasic implements Comparable<RecipeBasic>{
 
     @Id
     @JsonProperty("_id")
@@ -60,6 +60,8 @@ public class RecipeBasic {
 
     @JsonProperty("cookingTime")
     private String cookingTime;
+
+    private double percenatge;
 
     public RecipeBasic(ObjectId _id, String detUrl, String irdntCode, String imgUrl, String nationCode, String sumry,
                        String calorie, String tyCode, String recipeNmKo, Integer rn, String qnt, String pcNm, String tyNm,
@@ -148,4 +150,13 @@ public class RecipeBasic {
     public String getCookingTime() { return cookingTime; }
 
     public void setCookingTime(String cookingTime) { this.cookingTime = cookingTime; }
+
+    public double getPercenatge() { return percenatge;}
+
+    public void setPercenatge(double percenatge) { this.percenatge = percenatge; }
+
+    @Override
+    public int compareTo(RecipeBasic recipeBasic) {
+        return (int)(recipeBasic.percenatge-this.percenatge);
+    }
 }

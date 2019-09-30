@@ -1,6 +1,7 @@
 package com.pac.controller;
 
 import com.pac.domain.recipe.RecipeBasic;
+import com.pac.domain.recipe.RecipeIngredient;
 import com.pac.service.CommunityService;
 import com.pac.service.RecipeService;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class RecipeController {
 
 	@PostMapping("/getResult")
     public ResponseEntity<List<RecipeBasic>> getResutlByKeyword(@RequestParam("ingredients") List<String>ingredients){
-        return new ResponseEntity<List<RecipeBasic>>(recipeService.getRecipesByIngredients(ingredients),HttpStatus.OK);
+        return new ResponseEntity<>(recipeService.getRecipesByIngredients(ingredients), HttpStatus.OK);
     }
 
 
