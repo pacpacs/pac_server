@@ -1,9 +1,12 @@
 package com.pac.service;
 
 import com.pac.domain.recipe.RecipeBasic;
+import com.pac.domain.recipe.RecipeBoard;
 import com.pac.domain.recipe.RecipeIngredient;
+import com.pac.domain.recipe.RecipeProcess;
 import com.pac.repository.recipe.RecipeBasicRepository;
 import com.pac.repository.recipe.RecipeIngredientsRepository;
+import com.pac.repository.recipe.RecipeProcessRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +26,26 @@ public class RecipeService {
     RecipeBasicRepository recipeBasicRepository;
     @Autowired
     RecipeIngredientsRepository recipeIngredientsRepository;
+    @Autowired
+    RecipeProcessRepository recipeProcessRepository;
 
     public List<RecipeBasic> getAllRecipes(){
         List<RecipeBasic> recipeBasicList = recipeBasicRepository.findAll();
         return recipeBasicList;
     }
+
+    public RecipeBasic getRecipesById(int recipeId){
+        return recipeBasicRepository.findByRecipeId(recipeId);
+    }
+
+    public List<RecipeIngredient> getRecipeIngredientsById(int recipeId){
+        return recipeIngredientsRepository.findByRecipeId(recipeId);
+    }
+
+    public List<RecipeProcess> getRecipeProcessById(int recipeId){
+        return recipeProcessRepository.findByRecipeIdOrderByCookingNo(recipeId);
+    }
+
 
     public List<RecipeBasic> getRecipesByIngredients(List<String>ingredients){
 
@@ -104,4 +122,7 @@ public class RecipeService {
         return recipeIdList;
     }
 
+    public List<RecipeBoard> getRecipeBoard(RecipeBasic recipeBasic, List<RecipeProcess> recipeProcess, List<RecipeIngredient> recipeIngredient) {
+        return null;
+    }
 }
