@@ -37,7 +37,20 @@ public class RecipeService {
         List<Integer> recipeIdList = makeRecipeIdList(recipeBasicList);
         List<RecipeIngredient> recipeIngredientsByRecipeId = recipeIngredientsRepository.findByRecipeIdInOrderByRecipeId(recipeIdList);
         recipeBasicList = getRecipesPercentage(recipeIngredientsByRecipeId,recipeBasicList,ingredients);
-        Collections.sort(recipeBasicList);
+
+        recipeBasicList.sort((RecipeBasic recipeBasic1, RecipeBasic recipeBasic2)->{
+            if(recipeBasic1.getPercenatge()<recipeBasic2.getPercenatge()){
+                return 1;
+            }else if(recipeBasic1.getPercenatge()==recipeBasic2.getPercenatge()){
+                if(recipeBasic1.getRecipeId()<recipeBasic2.getRecipeId()){
+                    return 1;
+                }
+                return -1;
+            }else{
+                return -1;
+            }
+        });
+//        Collections.sort(recipeBasicList);
 
         return recipeBasicList;
     }

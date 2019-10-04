@@ -157,6 +157,17 @@ public class RecipeBasic implements Comparable<RecipeBasic>{
 
     @Override
     public int compareTo(RecipeBasic recipeBasic) {
-        return (int)(recipeBasic.percenatge-this.percenatge);
+
+        if(recipeBasic.percenatge<this.percenatge){
+           return -1;
+        }else if(recipeBasic.percenatge==this.percenatge){
+            if(recipeBasic.recipeId<this.recipeId){
+                return -1;
+            }
+            return 0;
+        }else{
+            return 0;
+        }
+
     }
 }
