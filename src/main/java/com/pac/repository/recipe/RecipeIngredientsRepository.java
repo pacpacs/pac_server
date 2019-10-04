@@ -13,4 +13,6 @@ public interface RecipeIngredientsRepository extends MongoRepository<RecipeIngre
     List<RecipeIngredient> findByIrdntNmInOrderByRecipeId(List<String> ingredients);
 
     List<RecipeIngredient> findByRecipeIdInOrderByRecipeId(List<Integer> recipeIdList);
+
+    List<RecipeIngredient> findByRecipeId(int recipeId);
 }

@@ -10,5 +10,4 @@ import com.pac.domain.recipe.RecipeBasic;
 public interface RecipeBasicRepository extends MongoRepository<RecipeBasic, String> {
     RecipeBasic findByRecipeId(Integer recipeId);
     List<RecipeBasic> findByRecipeIdInOrderByRecipeId(List<Integer> recipeId);
-
 }
