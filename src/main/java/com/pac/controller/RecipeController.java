@@ -42,8 +42,11 @@ public class RecipeController<RecipeAll> {
     public ResponseEntity<List<RecipeBoard>> getSepecificRecipe(@RequestParam("recipeNo") int recipeNo){
 
         RecipeBasic recipeBasic= recipeService.getRecipesById(recipeNo);
+
         List<RecipeProcess> recipeProcess = recipeService.getRecipeProcessById(recipeNo);
+
         List<RecipeIngredient> recipeIngredient = recipeService.getRecipeIngredientsById(recipeNo);
+
         return ResponseEntity.status(HttpStatus.OK).body(recipeService.getRecipeBoard(recipeBasic,recipeProcess,recipeIngredient));
     }
 	@GetMapping("/getResult")

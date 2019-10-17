@@ -1,9 +1,12 @@
 package com.pac.domain.recipe;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pac.domain.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Document(collection="recipe_basic")
 public class RecipeBasic implements Comparable<RecipeBasic>{
@@ -63,6 +66,12 @@ public class RecipeBasic implements Comparable<RecipeBasic>{
 
     private double percenatge;
 
+    private Date createdDate;
+
+    @JsonProperty("authorId")
+    String author;
+
+
     public RecipeBasic(ObjectId _id, String detUrl, String irdntCode, String imgUrl, String nationCode, String sumry,
                        String calorie, String tyCode, String recipeNmKo, Integer rn, String qnt, String pcNm, String tyNm,
                        String levelNm, Integer recipeId, String nationNm, String cookingTime) {
@@ -83,6 +92,14 @@ public class RecipeBasic implements Comparable<RecipeBasic>{
         this.recipeId = recipeId;
         this.nationNm = nationNm;
         this.cookingTime = cookingTime;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String get_id() { return _id.toHexString(); }
@@ -154,6 +171,15 @@ public class RecipeBasic implements Comparable<RecipeBasic>{
     public double getPercenatge() { return percenatge;}
 
     public void setPercenatge(double percenatge) { this.percenatge = percenatge; }
+
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
 
     @Override
     public int compareTo(RecipeBasic recipeBasic) {

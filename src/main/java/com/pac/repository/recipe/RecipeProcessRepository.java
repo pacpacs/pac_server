@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RecipeProcessRepository extends MongoRepository<RecipeProcess, String> {
-   List<RecipeProcess> findByRecipeIdOrderByCookingNo(int recipeId);
+   List<RecipeProcess> findByRecipeId(int recipeId);
 }

@@ -40,30 +40,6 @@ public class RecipeProcess {
         this.cookingNo = cookingNo;
     }
 
-    public RecipeProcess(String streStepImageUrl, String stepTip, int rn, int recipeId, String cookingDc, int cookingNo) {
-        this.streStepImageUrl = streStepImageUrl;
-        this.stepTip = stepTip;
-        this.rn = rn;
-        this.recipeId = recipeId;
-        this.cookingDc = cookingDc;
-        this.cookingNo = cookingNo;
-    }
-
-    public RecipeProcess(String streStepImageUrl, int rn, int recipeId, String cookingDc, int cookingNo) {
-        this.streStepImageUrl = streStepImageUrl;
-        this.rn = rn;
-        this.recipeId = recipeId;
-        this.cookingDc = cookingDc;
-        this.cookingNo = cookingNo;
-    }
-
-    public RecipeProcess(int rn, int recipeId, String cookingDc, int cookingNo) {
-        this.rn = rn;
-        this.recipeId = recipeId;
-        this.cookingDc = cookingDc;
-        this.cookingNo = cookingNo;
-    }
-
     public ObjectId get_id() {
         return _id;
     }

@@ -43,11 +43,13 @@ public class RecipeService {
     }
 
     public List<RecipeProcess> getRecipeProcessById(int recipeId){
-        return recipeProcessRepository.findByRecipeIdOrderByCookingNo(recipeId);
+        List<RecipeProcess> recipeProcessesList = recipeProcessRepository.findByRecipeId(recipeId);
+        recipeProcessesList.sort(Comparator.comparing(RecipeProcess::getCookingNo));
+        return recipeProcessesList;
     }
 
 
-    public List<RecipeBasic> getRecipesByIngredients(List<String>ingredients){
+    public List<RecipeBasic> getRecipesByIngredients(List<String> ingredients){
 
         List<RecipeIngredient> recipeIngredientList = recipeIngredientsRepository.findByIrdntNmInOrderByRecipeId(ingredients);
         List<Integer> recipeIdListFromDB = getRecipeId(recipeIngredientList);
@@ -123,6 +125,24 @@ public class RecipeService {
     }
 
     public List<RecipeBoard> getRecipeBoard(RecipeBasic recipeBasic, List<RecipeProcess> recipeProcess, List<RecipeIngredient> recipeIngredient) {
-        return null;
+        List<RecipeBoard> recipeBoardList = new ArrayList<>();
+        for(RecipeProcess rp : recipeProcess){
+            RecipeBoard rb = new RecipeBoard();
+            rb.setRecipeId(recipeBasic.getRecipeId());
+            rb.setTitle(recipeBasic.getRecipeNmKo());
+            rb.setDescription(rp.getCookingDc());
+            rb.setImgPath(rp.getStreStepImageUrl());
+            rb.setKcal(recipeBasic.getCalorie());
+            rb.setOrderNum(rp.getCookingNo());
+            rb.setCreatedDate(recipeBasic.getCreatedDate());
+            if(recipeBasic.getAuthor()==null){
+                rb.setAuthorId("administrator");
+            }else{
+                rb.setAuthorId(recipeBasic.getAuthor());
+            }
+
+            recipeBoardList.add(rb);
+        }
+        return recipeBoardList;
     }
 }
