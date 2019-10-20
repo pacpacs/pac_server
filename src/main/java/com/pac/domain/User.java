@@ -14,7 +14,6 @@ public class User {
 	private ObjectId _id;
 
 	@JsonProperty("userId")
-	@Indexed(unique = true)
 	private String userId;
 
 	@JsonProperty("nickName")
